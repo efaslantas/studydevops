@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-test
+  namespace: hcm-test
+spec:
+  selector:
+    app: redis-test
+  type: NodePort
+  ports:
+  - name: http
+    port: 6379
+    targetPort: 6379
+    nodePort: 30201
+    protocol: TCP

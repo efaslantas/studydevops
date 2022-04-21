@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rabbitmq-test-pv-volume
+  namespace: hcm-test
+  labels:
+    type: local
+spec:
+  storageClassName: rabbitmq-test
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/rabbitmq-test/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmq-test-pv-claim
+  namespace: hcm-test
+spec:
+  storageClassName: rabbitmq-test
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi

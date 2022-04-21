@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+
+kind: Deployment
+metadata:
+  name: mssql-test
+  namespace: hcm-test
+spec:
+  selector:
+    matchLabels:
+      app: mssql-test
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: mssql-test
+    spec:
+      containers:
+      - name: mssql-test
+        image: mcr.microsoft.com/mssql/server:2017-latest
+        env:
+        - name: PORT
+          value: "1433"
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          value: "P@ssHcm!123"
+        volumeMounts:
+        - name: mssql-test-persistent-storage
+          mountPath: /var/opt/mssql
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+          limits:
+            cpu: 2
+            memory: 4Gi
+      volumes:
+      - name: mssql-test-persistent-storage
+        persistentVolumeClaim:
+          claimName: mssql-test-pv-claim
+      nodeSelector:
+        kubernetes.io/hostname: nonprod4

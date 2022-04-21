@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+
+kind: Deployment
+metadata:
+  name: rabbitmq-test
+  namespace: hcm-test
+spec:
+  selector:
+    matchLabels:
+      app: rabbitmq-test
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-test
+    spec:
+      containers:
+      - name: rabbitmq-test
+        image: rabbitmq:latest
+        env:
+        - name: PORT
+          value: "5672"
+        volumeMounts:
+        - name: rabbitmq-test-persistent-storage
+          mountPath: /var/lib/rabbitmq
+      volumes:
+      - name: rabbitmq-test-persistent-storage
+        persistentVolumeClaim:
+          claimName: rabbitmq-test-pv-claim
+      nodeSelector:
+        kubernetes.io/hostname: nonprod4

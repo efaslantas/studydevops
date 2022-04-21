@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mssql-test-pv-volume
+  namespace: hcm-test
+  labels:
+    type: local
+spec:
+  storageClassName: mssql-test
+  capacity:
+    storage: 40Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/mssql-test/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mssql-test-pv-claim
+  namespace: hcm-test
+spec:
+  storageClassName: mssql-test
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 40Gi

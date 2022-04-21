@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+
+kind: Deployment
+metadata:
+  name: redis-test
+  namespace: hcm-test
+spec:
+  selector:
+    matchLabels:
+      app: redis-test
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: redis-test
+    spec:
+      containers:
+      - name: redis-test
+        image: redis:latest
+        env:
+        - name: PORT
+          value: "6379"
+        volumeMounts:
+        - name: redis-test-persistent-storage
+          mountPath: /data
+      volumes:
+      - name: redis-test-persistent-storage
+        persistentVolumeClaim:
+          claimName: redis-test-pv-claim
+      nodeSelector:
+        kubernetes.io/hostname: nonprod4
