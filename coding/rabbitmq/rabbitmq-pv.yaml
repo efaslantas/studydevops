@@ -18,7 +18,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: rabbitmq-test-pv-claim
-  namespace: hcm-test
+  namespace: app-test
 spec:
   storageClassName: rabbitmq-test
   accessModes:

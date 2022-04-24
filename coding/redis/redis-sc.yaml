@@ -2,6 +2,6 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: redis-test
-  namespace: hcm-test
+  namespace: app-test
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer

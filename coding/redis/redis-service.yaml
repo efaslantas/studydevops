@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-test
-  namespace: hcm-test
+  namespace: app-test
 spec:
   selector:
     app: redis-test

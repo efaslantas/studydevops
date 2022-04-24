@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-test
-  namespace: hcm-test
+  namespace: app-test
 spec:
   selector:
     matchLabels:
